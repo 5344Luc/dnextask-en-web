@@ -1,0 +1,76 @@
+@import "tailwindcss";
+@import "./styles/themes.css";
+@import "@flaticon/flaticon-uicons/css/all/all.css";
+
+@theme inline {
+  --color-primary:       var(--color-primary);
+  --color-background:    var(--color-background);
+  --color-surface:       var(--color-surface);
+  --color-border:        var(--color-border);
+  --color-text:          var(--color-text);
+  --color-text-muted:    var(--color-text-muted);
+  --color-danger:        var(--color-danger);
+  --color-warning:       var(--color-warning);
+  --color-success:       var(--color-success);
+  --color-info:          var(--color-info);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  /*padding: 0;*/
+}
+
+html {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color:            var(--color-text);
+  min-height:       100vh;
+  transition:       background-color 0.2s ease, color 0.2s ease;
+}
+
+::-webkit-scrollbar {
+  width:  6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background:    var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color:            var(--color-text-inverse);
+}
+
+@keyframes bubbleFloat {
+  0% {
+    transform: translate(0, 0) scale(0.85);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(var(--sway), -55vh) scale(1.05);
+  }
+  92% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(calc(var(--sway) * -1), -115vh) scale(0.9);
+    opacity: 0;
+  }
+}

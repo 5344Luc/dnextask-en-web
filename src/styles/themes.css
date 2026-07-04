@@ -1,0 +1,264 @@
+/* ============================================
+   dNextask-en Theme System
+   9 themes: light, dark, corporate, bumblebee,
+   emerald, garden, lemonade, sunset, winter
+   Colors converted from DaisyUI v5.5.18 official
+   OKLCH source (cdn.jsdelivr.net/npm/daisyui@5/themes.css)
+   ============================================ */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #f8f8f8;
+  --color-base-300: #eeeeee;
+  --color-base-content: #18181b;
+
+  --color-primary: #16a34a;
+  --color-primary-content: #ffffff;
+  --color-secondary: #f43098;
+  --color-secondary-content: #f9e4f0;
+  --color-accent: #00d3bb;
+  --color-accent-content: #084d49;
+  --color-neutral: #09090b;
+  --color-neutral-content: #e4e4e7;
+
+  --color-success: #00d390;
+  --color-success-content: #004c39;
+  --color-warning: #fcb700;
+  --color-warning-content: #793205;
+  --color-error: #ff627d;
+  --color-error-content: #4d0218;
+
+  --color-border: #eeeeee;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-base-100: #0a0f0d;
+  --color-base-200: #131a17;
+  --color-base-300: #1c2521;
+  --color-base-content: #ecf9ff;
+
+  --color-primary: #22c55e;
+  --color-primary-content: #08130c;
+  --color-secondary: #f43098;
+  --color-secondary-content: #f9e4f0;
+  --color-accent: #00d3bb;
+  --color-accent-content: #084d49;
+  --color-neutral: #09090b;
+  --color-neutral-content: #e4e4e7;
+
+  --color-success: #00d390;
+  --color-success-content: #004c39;
+  --color-warning: #fcb700;
+  --color-warning-content: #793205;
+  --color-error: #ff627d;
+  --color-error-content: #4d0218;
+
+  --color-border: #1c2521;
+}
+
+[data-theme="corporate"] {
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #e8e8e8;
+  --color-base-300: #d1d1d1;
+  --color-base-content: #181a2a;
+
+  --color-primary: #0090b5;
+  --color-primary-content: #ffffff;
+  --color-secondary: #61738d;
+  --color-secondary-content: #ffffff;
+  --color-accent: #009689;
+  --color-accent-content: #ffffff;
+  --color-neutral: #000000;
+  --color-neutral-content: #ffffff;
+
+  --color-success: #00a43b;
+  --color-success-content: #ffffff;
+  --color-warning: #fdc700;
+  --color-warning-content: #000000;
+  --color-error: #ff6266;
+  --color-error-content: #000000;
+
+  --color-border: #d1d1d1;
+}
+
+[data-theme="bumblebee"] {
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #f5f5f5;
+  --color-base-300: #e4e4e4;
+  --color-base-content: #161616;
+
+  --color-primary: #fdc700;
+  --color-primary-content: #733e0a;
+  --color-secondary: #ff8904;
+  --color-secondary-content: #7c2808;
+  --color-accent: #000000;
+  --color-accent-content: #ffffff;
+  --color-neutral: #433f3a;
+  --color-neutral-content: #e6e4e3;
+
+  --color-success: #00d390;
+  --color-success-content: #004c39;
+  --color-warning: #fcb700;
+  --color-warning-content: #793205;
+  --color-error: #ff6266;
+  --color-error-content: #801518;
+
+  --color-border: #e4e4e4;
+}
+
+[data-theme="emerald"] {
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #e8e8e8;
+  --color-base-300: #d1d1d1;
+  --color-base-content: #333c4d;
+
+  --color-primary: #66cc8a;
+  --color-primary-content: #223d30;
+  --color-secondary: #377cfb;
+  --color-secondary-content: #ffffff;
+  --color-accent: #f68067;
+  --color-accent-content: #000000;
+  --color-neutral: #333c4d;
+  --color-neutral-content: #f9fafb;
+
+  --color-success: #00a96e;
+  --color-success-content: #000000;
+  --color-warning: #ffbe00;
+  --color-warning-content: #000000;
+  --color-error: #ff5861;
+  --color-error-content: #000000;
+
+  --color-border: #d1d1d1;
+}
+
+[data-theme="garden"] {
+  color-scheme: light;
+
+  --color-base-100: #e9e7e7;
+  --color-base-200: #d4d2d2;
+  --color-base-300: #bebdbd;
+  --color-base-content: #100f0f;
+
+  --color-primary: #fe0075;
+  --color-primary-content: #ffffff;
+  --color-secondary: #8e4162;
+  --color-secondary-content: #ead7de;
+  --color-accent: #5c7f67;
+  --color-accent-content: #ffffff;
+  --color-neutral: #291e00;
+  --color-neutral-content: #e9e7e7;
+
+  --color-success: #00a96e;
+  --color-success-content: #000000;
+  --color-warning: #ffbe00;
+  --color-warning-content: #000000;
+  --color-error: #ff5861;
+  --color-error-content: #000000;
+
+  --color-border: #bebdbd;
+}
+
+[data-theme="lemonade"] {
+  color-scheme: light;
+
+  --color-base-100: #f8fdef;
+  --color-base-200: #e1e6d9;
+  --color-base-300: #cbcfc3;
+  --color-base-content: #151614;
+
+  --color-primary: #419400;
+  --color-primary-content: #010800;
+  --color-secondary: #bdc000;
+  --color-secondary-content: #0d0e00;
+  --color-accent: #edd000;
+  --color-accent-content: #141000;
+  --color-neutral: #343300;
+  --color-neutral-content: #d2d3c7;
+
+  --color-success: #b9dbc6;
+  --color-success-content: #0d110e;
+  --color-warning: #d7d3b0;
+  --color-warning-content: #11100c;
+  --color-error: #efc6c2;
+  --color-error-content: #140e0e;
+
+  --color-border: #cbcfc3;
+}
+
+[data-theme="sunset"] {
+  color-scheme: dark;
+
+  --color-base-100: #121c22;
+  --color-base-200: #0e171e;
+  --color-base-300: #091319;
+  --color-base-content: #9fb9d0;
+
+  --color-primary: #ff865b;
+  --color-primary-content: #160603;
+  --color-secondary: #fd6f9c;
+  --color-secondary-content: #160409;
+  --color-accent: #b387fa;
+  --color-accent-content: #0c0615;
+  --color-neutral: #1b262c;
+  --color-neutral-content: #94a0a9;
+
+  --color-success: #addfad;
+  --color-success-content: #0b120b;
+  --color-warning: #f1c892;
+  --color-warning-content: #140f08;
+  --color-error: #ffbbbd;
+  --color-error-content: #160d0d;
+
+  --color-border: #091319;
+}
+
+[data-theme="winter"] {
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #f2f7fe;
+  --color-base-300: #e3e9f4;
+  --color-base-content: #394e6a;
+
+  --color-primary: #0069ff;
+  --color-primary-content: #cee4ff;
+  --color-secondary: #463aa2;
+  --color-secondary-content: #d5d7ee;
+  --color-accent: #c148ac;
+  --color-accent-content: #0e020b;
+  --color-neutral: #021431;
+  --color-neutral-content: #c5cbd2;
+
+  --color-success: #81cfd1;
+  --color-success-content: #060f10;
+  --color-warning: #efd7bc;
+  --color-warning-content: #14110d;
+  --color-error: #e58b8b;
+  --color-error-content: #120707;
+
+  --color-border: #e3e9f4;
+}
+
+/* ============================================
+   Global usage
+   ============================================ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-base-100);
+  color: var(--color-base-content);
+}
