@@ -1,14 +1,17 @@
-import { useState, useRef, useEffect } from 'react'
-import { Link, useNavigate, useParams } from '@tanstack/react-router'
 import { ChevronRight, Folder as FolderIcon, List as ListIcon, Plus } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { useSpaces } from '../api/useSpaces'
 import { useFolders } from '../api/useFolders'
 import { useLists } from '../api/useLists'
 import { CreateSpaceModal } from './CreateSpaceModal'
-import type { Space } from '../../../types'
 import { CreateListModal } from './CreateListModal'
+import { CreateFolderModal } from './CreateFolderModal'
 import { EditSpaceModal } from './EditSpaceModal'
 import { DeleteSpaceDialog } from './DeleteSpaceDialog'
+import { EditFolderModal } from './EditFolderModal'
+import { DeleteFolderDialog } from './DeleteFolderDialog'
+import type { Space } from '../../../types'
 
 export function SpaceTree({ workspaceId }: { workspaceId: string }) {
   const { data, isLoading } = useSpaces(workspaceId)
@@ -18,14 +21,14 @@ export function SpaceTree({ workspaceId }: { workspaceId: string }) {
   return (
     <div className="flex flex-col gap-0.5">
       <div className="flex items-center justify-between px-2 mb-1">
-        <span className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide">
+        <span className="text-xs font-semibold text-[var(--color-base-content)] opacity-50 uppercase tracking-wide">
           Spaces
         </span>
         <button
           onClick={() => setModalOpen(true)}
-          className="h-5 w-5 flex items-center justify-center rounded-md text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] transition-colors"
+          className="h-5 w-5 flex items-center justify-center rounded-md text-[var(--color-base-content)] opacity-60 hover:opacity-100 hover:bg-[var(--color-base-200)] transition-colors"
         >
-          <Plus size={13} />
+          <i className="fi fi-rr-plus" style={{ fontSize: '11px' }} />
         </button>
       </div>
 
@@ -36,7 +39,7 @@ export function SpaceTree({ workspaceId }: { workspaceId: string }) {
       ) : spaces.length === 0 ? (
         <button
           onClick={() => setModalOpen(true)}
-          className="mx-2 px-2.5 py-2 rounded-lg border border-dashed border-[var(--color-border)] text-xs text-[var(--color-text-muted)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors text-left"
+          className="mx-2 px-2.5 py-2 rounded-lg border border-dashed border-[var(--color-border)] text-xs text-[var(--color-base-content)] opacity-60 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] hover:opacity-100 transition-colors text-left"
         >
           + Create your first space
         </button>
@@ -52,29 +55,30 @@ export function SpaceTree({ workspaceId }: { workspaceId: string }) {
 }
 
 function SpaceNode({ workspaceId, space }: { workspaceId: string; space: Space }) {
-    const navigate = useNavigate()
-    const [expanded, setExpanded] = useState(false)
-    const [listModalOpen, setListModalOpen] = useState(false)
-    const [menuOpen, setMenuOpen] = useState(false)
-    const [editModalOpen, setEditModalOpen] = useState(false)
-    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-    const menuRef = useRef<HTMLDivElement>(null)
-    const { data: foldersData } = useFolders(workspaceId, space.id)
-    const { data: listsData }   = useLists(workspaceId, space.id)
+  const navigate = useNavigate()
+  const [expanded, setExpanded] = useState(false)
+  const [listModalOpen, setListModalOpen] = useState(false)
+  const [folderModalOpen, setFolderModalOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [editModalOpen, setEditModalOpen] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const { data: foldersData } = useFolders(workspaceId, space.id)
+  const { data: listsData }   = useLists(workspaceId, space.id)
 
-    const folders   = foldersData?.data ?? []
-    const allLists  = listsData?.data ?? []
-    const rootLists = allLists.filter((l) => !l.folder_id)
+  const folders   = foldersData?.data ?? []
+  const allLists  = listsData?.data ?? []
+  const rootLists = allLists.filter((l) => !l.folder_id)
 
-    useEffect(() => {
-        function handleClickOutside(e: MouseEvent) {
-        if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-            setMenuOpen(false)
-        }
-        }
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [])
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
     <div>
@@ -127,12 +131,32 @@ function SpaceNode({ workspaceId, space }: { workspaceId: string; space: Space }
               <button
                 onClick={() => {
                   setMenuOpen(false)
+                  setFolderModalOpen(true)
+                }}
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[var(--color-base-content)] hover:bg-[var(--color-base-200)] transition-colors"
+              >
+                <i className="fi fi-rr-folder" style={{ fontSize: '13px' }} />
+                New folder
+              </button>
+              <button
+                onClick={() => {
+                  setMenuOpen(false)
                   setEditModalOpen(true)
                 }}
                 className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[var(--color-base-content)] hover:bg-[var(--color-base-200)] transition-colors"
               >
                 <i className="fi fi-rr-pencil" style={{ fontSize: '13px' }} />
                 Edit
+              </button>
+              <button
+                onClick={() => {
+                  setMenuOpen(false)
+                  navigate({ to: '/workspaces/$workspaceId/spaces/$spaceId/settings', params: { workspaceId, spaceId: space.id } })
+                }}
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[var(--color-base-content)] hover:bg-[var(--color-base-200)] transition-colors"
+              >
+                <i className="fi fi-rr-settings" style={{ fontSize: '13px' }} />
+                Settings
               </button>
               {/*<button
                 onClick={() => {
@@ -144,17 +168,6 @@ function SpaceNode({ workspaceId, space }: { workspaceId: string; space: Space }
                 <i className="fi fi-rr-trash" style={{ fontSize: '13px' }} />
                 Delete
               </button>*/}
-
-              <button
-                onClick={() => {
-                  setMenuOpen(false)
-                  navigate({ to: '/workspaces/$workspaceId/spaces/$spaceId/settings', params: { workspaceId, spaceId: space.id } })
-                }}
-                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[var(--color-base-content)] hover:bg-[var(--color-base-200)] transition-colors"
-              >
-                <i className="fi fi-rr-settings" style={{ fontSize: '13px' }} />
-                Settings
-              </button>
             </div>
           )}
         </div>
@@ -187,6 +200,12 @@ function SpaceNode({ workspaceId, space }: { workspaceId: string; space: Space }
         spaceId={space.id}
         isOpen={listModalOpen}
         onClose={() => setListModalOpen(false)}
+      />
+      <CreateFolderModal
+        workspaceId={workspaceId}
+        spaceId={space.id}
+        isOpen={folderModalOpen}
+        onClose={() => setFolderModalOpen(false)}
       />
       <EditSpaceModal
         workspaceId={workspaceId}
@@ -222,5 +241,137 @@ function ListLink({
       <ListIcon size={13} style={{ color: list.color }} className="shrink-0" />
       <span className="text-sm text-[var(--color-text)] truncate">{list.name}</span>
     </Link>
+  )
+}
+
+function FolderNode({
+  workspaceId,
+  spaceId,
+  folder,
+  lists,
+}: {
+  workspaceId: string
+  spaceId: string
+  folder: { id: string; name: string }
+  lists: { id: string; name: string; color: string; folder_id: string | null }[]
+}) {
+  const [expanded, setExpanded] = useState(false)
+  const [listModalOpen, setListModalOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [editModalOpen, setEditModalOpen] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  return (
+    <div>
+      <div className="flex items-center group">
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="flex-1 flex items-center gap-1.5 px-2 py-1.5 rounded-lg hover:bg-[var(--color-base-200)] transition-colors text-left"
+        >
+          <i
+            className="fi fi-rr-angle-small-right text-[var(--color-base-content)] opacity-50 shrink-0 transition-transform"
+            style={{ fontSize: '12px', transform: expanded ? 'rotate(90deg)' : 'none' }}
+          />
+          <i className="fi fi-rr-folder text-[var(--color-base-content)] opacity-60 shrink-0" style={{ fontSize: '13px' }} />
+          <span className="text-sm text-[var(--color-base-content)] truncate">{folder.name}</span>
+        </button>
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            setListModalOpen(true)
+          }}
+          className="h-6 w-6 shrink-0 flex items-center justify-center rounded-md text-[var(--color-base-content)] opacity-0 group-hover:opacity-60 hover:!opacity-100 hover:bg-[var(--color-base-200)] transition-all"
+          title="Add list"
+        >
+          <i className="fi fi-rr-plus" style={{ fontSize: '11px' }} />
+        </button>
+
+        <div className="relative" ref={menuRef}>
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              setMenuOpen((v) => !v)
+            }}
+            className="h-6 w-6 shrink-0 flex items-center justify-center rounded-md text-[var(--color-base-content)] opacity-0 group-hover:opacity-60 hover:!opacity-100 hover:bg-[var(--color-base-200)] transition-all mr-1"
+            title="Folder options"
+          >
+            <i className="fi fi-rr-menu-dots" style={{ fontSize: '11px' }} />
+          </button>
+
+          {menuOpen && (
+            <div
+              className="absolute right-0 top-7 w-40 rounded-xl border border-[var(--color-border)] shadow-lg py-1.5 z-50"
+              style={{ backgroundColor: 'var(--color-base-100)' }}
+            >
+              <button
+                onClick={() => {
+                  setMenuOpen(false)
+                  setEditModalOpen(true)
+                }}
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[var(--color-base-content)] hover:bg-[var(--color-base-200)] transition-colors"
+              >
+                <i className="fi fi-rr-pencil" style={{ fontSize: '13px' }} />
+                Edit
+              </button>
+              <button
+                onClick={() => {
+                  setMenuOpen(false)
+                  setDeleteDialogOpen(true)
+                }}
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[var(--color-error)] hover:bg-[var(--color-base-200)] transition-colors"
+              >
+                <i className="fi fi-rr-trash" style={{ fontSize: '13px' }} />
+                Delete
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {expanded && (
+        <div className="ml-5 pl-2 border-l border-[var(--color-border)] flex flex-col gap-0.5 mt-0.5">
+          {lists.length === 0 ? (
+            <p className="text-xs text-[var(--color-base-content)] opacity-50 px-2 py-1.5">No lists</p>
+          ) : (
+            lists.map((list) => (
+              <ListLink key={list.id} workspaceId={workspaceId} spaceId={spaceId} list={list} />
+            ))
+          )}
+        </div>
+      )}
+
+      <CreateListModal
+        workspaceId={workspaceId}
+        spaceId={spaceId}
+        isOpen={listModalOpen}
+        onClose={() => setListModalOpen(false)}
+      />
+      <EditFolderModal
+        workspaceId={workspaceId}
+        spaceId={spaceId}
+        folder={folder}
+        isOpen={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+      />
+      <DeleteFolderDialog
+        workspaceId={workspaceId}
+        spaceId={spaceId}
+        folder={folder}
+        isOpen={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+      />
+    </div>
   )
 }
